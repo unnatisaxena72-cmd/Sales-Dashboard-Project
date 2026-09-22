@@ -20,7 +20,7 @@ Sample Superstore retail dataset containing order-level details: Region, Categor
 
 ## Business Questions Answered (SQL)
 
-All queries are in [`business_questions.sql`](./business_questions.sql).
+All queries are in [`business-questions.sql`](./business-questions.sql).
 
 1. Top-selling sub-categories by total sales
 2. Regional performance (sales and profit by region)
