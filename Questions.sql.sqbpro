@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="Salesdashboard.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1496"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="orders" custom_title="0" dock_id="1" table="4,6:mainorders"/><dock_state state="000000ff00000000fd00000001000000020000000000000000fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000ffffffff0000011e00ffffff000000000000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1*">SELECT &quot;Sub-Category&quot;, SUM(Sales) AS Total_Sales
+FROM orders
+GROUP BY &quot;Sub-Category&quot;
+ORDER BY Total_Sales DESC
+LIMIT 10;
+
+
+SELECT Region, SUM(Sales) AS Total_Sales, SUM(Profit) AS Total_Profit
+FROM orders
+GROUP BY Region
+ORDER BY Total_Sales DESC;
+
+SELECT Category, SUM(Sales) AS Total_Sales, SUM(Profit) AS Total_Profit,
+       ROUND(SUM(Profit) * 100.0 / SUM(Sales), 2) AS Profit_Margin_Pct
+FROM orders
+GROUP BY Category
+ORDER BY Total_Sales DESC;
+
+SELECT &quot;Sub-Category&quot;, SUM(Profit) AS Total_Profit
+FROM orders
+GROUP BY &quot;Sub-Category&quot;
+HAVING Total_Profit &lt; 0
+ORDER BY Total_Profit ASC;
+
+SELECT Segment, SUM(Sales) AS Total_Sales, SUM(Quantity) AS Total_Units
+FROM orders
+GROUP BY Segment
+ORDER BY Total_Sales DESC;
+
+
+SELECT State, SUM(Sales) AS Total_Sales
+FROM orders
+GROUP BY State
+ORDER BY Total_Sales DESC
+LIMIT 10;
+
+SELECT City, SUM(Sales) AS Total_Sales
+FROM orders
+GROUP BY City
+ORDER BY Total_Sales DESC
+LIMIT 10;
+
+
+SELECT 
+  CASE 
+    WHEN Discount = 0 THEN 'No Discount'
+    WHEN Discount &lt;= 0.2 THEN 'Low Discount (0-20%)'
+    WHEN Discount &lt;= 0.5 THEN 'Medium Discount (20-50%)'
+    ELSE 'High Discount (50%+)'
+  END AS Discount_Bracket,
+  SUM(Sales) AS Total_Sales,
+  SUM(Profit) AS Total_Profit
+FROM orders
+GROUP BY Discount_Bracket
+ORDER BY Total_Profit DESC;
+
+
+SELECT &quot;Ship Mode&quot;, COUNT(*) AS Order_Count, SUM(Sales) AS Total_Sales
+FROM orders
+GROUP BY &quot;Ship Mode&quot;
+ORDER BY Total_Sales DESC;</sql><current_tab id="0"/></tab_sql></sqlb_project>
